@@ -13,8 +13,8 @@ import updateClientesGestor from "./resolvers/updateClientesGestor.ts";
 import { load } from "https://deno.land/std@0.204.0/dotenv/mod.ts"; //Leer variables de entorno
 const env = await load(); //Carga Variables de entorno
 
-const MONGO_URL = env.MONGO_URL || Deno.env.get("MONGO_URL") || "mongodb+srv://rmontenegrop:Lllubo6BT2sVncJg@clusteruni.pagju8q.mongodb.net/BancoNebrija?retryWrites=true&w=majority"; //Variable del sistema operativo
-const PORT = env.PORT || Deno.env.get("PORT") || 3020;
+const MONGO_URL = env.MONGO_URL || Deno.env.get("MONGO_URL"); //Variable del sistema operativo
+const PORT = env.PORT || Deno.env.get("PORT") ;
 
 if (!MONGO_URL) {
   console.log("No mongo URL found");
