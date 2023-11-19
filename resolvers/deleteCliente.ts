@@ -20,6 +20,11 @@ const deleteCliente = async (req: Request, res: Response) => {
       return;
     }
 
+    if (Cliente.hipotecas.length > 0) {
+      res.status(404).send("Cliente has outstanding Hipotecas");
+      return;
+    }
+
     const Gestor = await GestorModel.findOneAndDelete({ dni: Cliente.gestor }).exec();
 
     if (!Gestor) {
