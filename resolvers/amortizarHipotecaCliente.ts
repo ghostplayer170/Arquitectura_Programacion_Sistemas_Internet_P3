@@ -1,5 +1,6 @@
 // deno-lint-ignore-file
 // @ts-ignore
+
 import { Request, Response } from "npm:express@4.18.2";
 import ClienteModel from "../db/clientes.ts";
 import HipotecaModel from "../db/hipotecas.ts";
@@ -45,6 +46,9 @@ const amortizarHipotecaCliente = async (req: Request, res: Response) => {
         cliente.saldo -= importeCuota;
         cliente.movimientos.push(movimiento);
     }else{
+      console.log("Saldo del cliente:", cliente.saldo);
+console.log("Importe de la cuota:", importeCuota);
+console.log("Deuda de cuotas de la hipoteca:", hipotecaCliente.deudaCuotas);
         res.status(400).send("Insufficient balance");
         return;
     }
