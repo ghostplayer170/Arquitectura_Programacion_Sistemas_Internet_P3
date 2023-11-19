@@ -8,7 +8,7 @@ const ingresarDineroCliente = async (req: Request, res: Response) => {
   try {
     
     const dni = req.params.id;
-    const importe: number = req.body.importe;
+    const { importe } = req.body;
 
     if (!dni || !importe) {
       res.status(400).send("Cliente DNI and Cantidad Dinero are required");
