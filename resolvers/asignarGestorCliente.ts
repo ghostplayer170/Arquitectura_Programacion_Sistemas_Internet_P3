@@ -20,7 +20,7 @@ const updateClientesGestor = async (req: Request, res: Response) => {
     const clienteExists = await ClienteModel.findOne({ dniGestor }).exec();
 
     if (!gestorExists || !clienteExists){
-      res.status(400).send("Cliente DNI or Gestor DNI not found");
+      res.status(404).send("Cliente DNI or Gestor DNI not found");
       return;
     }
 
