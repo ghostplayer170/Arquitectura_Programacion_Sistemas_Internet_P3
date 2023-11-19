@@ -1,6 +1,6 @@
 import { Request, Response } from "npm:express@4.18.2";
 import ClienteModel from "../db/clientes.ts";
-import GestorModel from "../db/clientes.ts";
+import GestorModel from "../db/gestores.ts";
 
 // Esta función maneja una solicitud para agregar un nuevo Cliente.
 const addCliente = async (req: Request, res: Response) => {
@@ -25,7 +25,7 @@ const addCliente = async (req: Request, res: Response) => {
     const gestorExists = await GestorModel.findOne({ dni: gestor }).exec();
 
     if (!gestorExists) {
-      res.status(400).send("Gestor dont exists");
+      res.status(400).send("Gestor not exists");
       return;
     }
 
