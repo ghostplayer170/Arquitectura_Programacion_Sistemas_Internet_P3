@@ -4,7 +4,7 @@ import ClienteModel from "../db/clientes.ts";
 const ingresarDineroCliente = async (req: Request, res: Response) => {
   try {
     
-    const { dni } = req.params;
+    const { dni } = req.params.id;
     const { cantidad } = req.body;
 
     if (!dni || !cantidad) {

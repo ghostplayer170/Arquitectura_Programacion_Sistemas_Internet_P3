@@ -5,15 +5,15 @@ import GestorModel from "../db/gestores.ts";
 const updateClientesGestor = async (req: Request, res: Response) => {
   try {
     
-    const { id } = req.params;
-    const { dni } = req.body;
+    const { dniCliente } = req.params.id;
+    const { dniGestor } = req.body.dniGestor;
 
-    if (!id || !dni) {
+    if (!dniCliente || !dniGestor) {
       res.status(400).send("Cliente DNI and Gestor DNI are required");
       return;
     }
 
-    const gestor = await GestorModel.findOne({ dni }).exec();
+    const gestor = await GestorModel.findOne({ dniGestor }).exec();
     // Si no encuentra la factura.
     if (!gestor) {
       res.status(404).send("Gestor not found");
@@ -21,10 +21,10 @@ const updateClientesGestor = async (req: Request, res: Response) => {
     }
 
     const updatedCliente = await ClienteModel.findOneAndUpdate(
-        // Buscamos un registro con 'dni' igual a 'id'
-        { dni: id },
+        // Buscamos un registro con 'dni' igual a 'dniCliente'
+        { dni: dniCliente },
         // Actualizamos campos
-        { gestor: dni },
+        { gestor: dniGestor },
         // Opciones adicionales, en este caso 'new: true' indica que queremos obtener el documento actualizado
         { new: true }
     ).exec();
@@ -39,11 +39,11 @@ const updateClientesGestor = async (req: Request, res: Response) => {
         return;
     }
     
-    const clientesGestor = gestor.clientes.push(id);
+    const clientesGestor = gestor.clientes.push(dniCliente);
 
     const updatedGestor = await GestorModel.findOneAndUpdate(
         // Buscamos un registro con 'dni' igual a 'dni'
-        { dni: dni },
+        { dni: dniCliente },
         // Actualizamos campos
         { clientes: clientesGestor },
         // Opciones adicionales, en este caso 'new: true' indica que queremos obtener el documento actualizado

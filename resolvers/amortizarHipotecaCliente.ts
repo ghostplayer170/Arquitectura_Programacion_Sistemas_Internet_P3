@@ -5,7 +5,7 @@ import HipotecaModel from "../db/hipotecas.ts";
 const amortizarHipotecaCliente = async (req: Request, res: Response) => {
   try {
     
-    const { dni } = req.params;
+    const { dni } = req.params.id;
     const { hipoteca } = req.body;
 
     if (!dni) {
