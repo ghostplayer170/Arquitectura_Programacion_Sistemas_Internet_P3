@@ -6,7 +6,7 @@ const updateClientesGestor = async (req: Request, res: Response) => {
   try {
     
     const { dniCliente } = req.params.id;
-    const { dniGestor } = req.body.dniGestor;
+    const { dniGestor } = req.body;
 
     if (!dniCliente || !dniGestor) {
       res.status(400).send("Cliente DNI and Gestor DNI are required");

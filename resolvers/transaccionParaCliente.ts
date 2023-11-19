@@ -5,8 +5,8 @@ const transaccionParaCliente = async (req: Request, res: Response) => {
   try {
     
     const { dniEmisor } = req.params.id;
-    const { dniReceptor } = req.body.receptorDNI;
-    const { cantidad } = req.body.cantidadDinero;
+    const { dniReceptor } = req.body;
+    const cantidad: number = req.body;
 
     if (!dniEmisor || !dniReceptor || !cantidad) {
       res.status(400).send("Cliente Emisor DNI, Cliente Receptor DNI, Cantidad Dinero are required");
