@@ -1,3 +1,6 @@
+// deno-lint-ignore-file
+// @ts-ignore
+
 import { Request, Response } from "npm:express@4.18.2";
 import GestorModel from "../db/gestores.ts";
 
