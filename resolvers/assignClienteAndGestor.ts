@@ -1,4 +1,3 @@
-import { Request, Response } from "npm:express@4.18.2";
 import ClienteModel from "../db/clientes.ts";
 import GestorModel from "../db/gestores.ts";
 
