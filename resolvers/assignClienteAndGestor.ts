@@ -19,8 +19,6 @@ const assignClienteAndGestor = async (dniCliente: string, dniGestor: string) => 
         { dni: dniCliente },
         // Actualizamos campos
         { gestor: dniGestor },
-        // Opciones adicionales, en este caso 'new: true' indica que queremos obtener el documento actualizado
-        { new: true }
     ).exec();
 
     if (!updatedCliente) {
@@ -34,8 +32,6 @@ const assignClienteAndGestor = async (dniCliente: string, dniGestor: string) => 
         { dni: dniCliente },
         // Actualizamos campos
         { clientes: clientesGestor },
-        // Opciones adicionales, en este caso 'new: true' indica que queremos obtener el documento actualizado
-        { new: true }
     ).exec();
 
 };
