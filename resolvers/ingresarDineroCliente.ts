@@ -5,7 +5,7 @@ const ingresarDineroCliente = async (req: Request, res: Response) => {
   try {
     
     const { id } = req.params;
-    const cantidad: number = req.body;
+    const cantidad = req.body;
 
     const dni = id;
 
