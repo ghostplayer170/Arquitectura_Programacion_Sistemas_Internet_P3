@@ -36,7 +36,7 @@ const addHipoteca = async (req: Request, res: Response) => {
 
     clienteExists.hipotecas.push(newHipoteca._id.toString());
 
-    const updatedCliente = await ClienteModel.findOneAndUpdate(
+    await ClienteModel.findOneAndUpdate(
       // Buscamos un registro con 'dni' igual a 'cliente'
       { dni: cliente },
       // Actualizamos campos
