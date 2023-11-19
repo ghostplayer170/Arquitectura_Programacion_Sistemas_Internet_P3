@@ -5,7 +5,7 @@ import addCliente from "./resolvers/addCliente.ts";
 import addGestor from "./resolvers/addGestor.ts";
 import addHipoteca from "./resolvers/addHipoteca.ts";
 import deleteCliente from "./resolvers/deleteCliente.ts";
-import updateClientesGestor from "./resolvers/asignarGestorCliente.ts";
+import asignarGestorCliente from "./resolvers/asignarGestorCliente.ts";
 import amortizarHipotecaCliente from "./resolvers/amortizarHipotecaCliente.ts";
 import transaccionParaCliente from "./resolvers/transaccionParaCliente.ts";
 import ingresarDineroCliente from "./resolvers/ingresarDineroCliente.ts";
@@ -36,7 +36,7 @@ app
   .post("/api/BancoNebrija/addGestor", addGestor)
   .post("/api/BancoNebrija/addHipoteca", addHipoteca)
   .delete("/api/BancoNebrija/deleteCliente/:id", deleteCliente)
-  .put("/api/BancoNebrija/updateClientesGestor/:id", updateClientesGestor)
+  .put("/api/BancoNebrija/asignarGestorCliente/:id", asignarGestorCliente)
   .put("/api/BancoNebrija/amortizarHipotecaCliente/:id", amortizarHipotecaCliente)
   .put("/api/BancoNebrija/transaccionParaCliente/:id", transaccionParaCliente)
   .put("/api/BancoNebrija/ingresarDineroCliente/:id", ingresarDineroCliente);
