@@ -3,6 +3,7 @@
 import { Request, Response } from "npm:express@4.18.2";
 import assignClienteAndGestor from "./assignClienteAndGestor.ts"
 import GestorModel from "../db/gestores.ts";
+import ClienteModel from "../db/clientes.ts";
 
 const updateClientesGestor = async (req: Request, res: Response) => {
   try {
@@ -16,7 +17,7 @@ const updateClientesGestor = async (req: Request, res: Response) => {
     }
 
     const gestorExists = await GestorModel.findOne({ dniGestor }).exec();
-    const clienteExists = await GestorModel.findOne({ dniGestor }).exec();
+    const clienteExists = await ClienteModel.findOne({ dniGestor }).exec();
 
     if (!gestorExists || !clienteExists){
       res.status(400).send("Cliente DNI or Gestor DNI not found");
