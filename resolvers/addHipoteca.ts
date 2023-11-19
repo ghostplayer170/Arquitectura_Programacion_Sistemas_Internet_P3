@@ -2,6 +2,7 @@ import { Request, Response } from "npm:express@4.18.2";
 import HipotecaModel from "../db/hipotecas.ts";
 import ClienteModel from "../db/clientes.ts";
 import GestorModel from "../db/gestores.ts";
+import assignClienteAndGestor from "./assignClienteAndGestor.ts"
 
 // Esta función maneja una solicitud para agregar un nuevo Hipoteca.
 const addHipoteca = async (req: Request, res: Response) => {
@@ -31,6 +32,12 @@ const addHipoteca = async (req: Request, res: Response) => {
     const newHipoteca = new HipotecaModel({ importe, deuda: importe, cliente, cuotas, gestor, deudaImporte: importe });
     await newHipoteca.save();
 
+    try {
+      assignClienteAndGestor(cliente, gestor);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+
     // Responde con los datos del nuevo Hipoteca.
     res.status(200).send({
         id: newHipoteca._id.toString(),
@@ -39,6 +46,8 @@ const addHipoteca = async (req: Request, res: Response) => {
         cuotas: newHipoteca.cuotas,
         cliente: newHipoteca.cliente,
         gestor: newHipoteca.gestor,
+        deudaImporte: newHipoteca.deudaImporte,
+        deudaCuotas: newHipoteca.deudaCuotas
     });
     
   } catch (error) {
