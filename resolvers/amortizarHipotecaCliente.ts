@@ -30,7 +30,7 @@ const amortizarHipotecaCliente = async (req: Request, res: Response) => {
         return;
     }
 
-    const hipotecaCliente = await HipotecaModel.findOne({ _id: idHipoteca }).exec();
+    const hipotecaCliente = await HipotecaModel.findOne({ _id: hipoteca }).exec();
 
     if ( !hipotecaCliente ) {
         res.status(404).send("Hipoteca  not found");

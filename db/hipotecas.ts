@@ -10,7 +10,7 @@ const HipotecaSchema = new Schema(
     cliente: { type: String, required: true },
     gestor: { type: String, required: true },    
     deudaImporte: { type: Number, required: true},
-    deudaCouta: { type: Number, required: false, default: 20},
+    deudaCuotas: { type: Number, required: false, default: 20},
   },
   // { timestamps: true } //Añade dos campos creado y modificado
 );
