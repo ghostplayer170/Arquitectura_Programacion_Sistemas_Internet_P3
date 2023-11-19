@@ -36,13 +36,13 @@ const amortizarHipotecaCliente = async (req: Request, res: Response) => {
         return;
     }
 
-    const importe = hipotecaCliente.importe/hipotecaCliente.cuotas;
-    const movimiento = `Emisor: ${dniCliente} send ${importe} to Receptor: ${idHipoteca}`;
+    const importeCuota = hipotecaCliente.importe/hipotecaCliente.cuotas;
+    const movimiento = `Emisor: ${dniCliente} send ${importeCuota} to Receptor: ${idHipoteca}`;
 
-    if( cliente?.saldo !== undefined && (cliente.saldo >= importe) && hipotecaCliente.deudaCuotas >= 0 ){
-        hipotecaCliente.deudaImporte -= importe;
+    if( cliente.saldo >= importeCuota && hipotecaCliente.deudaCuotas >= 0 ){
+        hipotecaCliente.deudaImporte -= importeCuota;
         hipotecaCliente.deudaCuotas -= 1;
-        cliente.saldo -= importe;
+        cliente.saldo -= importeCuota;
         cliente.movimientos.push(movimiento);
     }else{
         res.status(400).send("Insufficient balance");
