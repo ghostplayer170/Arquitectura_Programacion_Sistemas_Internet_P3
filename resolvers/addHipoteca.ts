@@ -28,7 +28,7 @@ const addHipoteca = async (req: Request, res: Response) => {
     }
 
     // Caso contrario, crea un nuevo Hipoteca y lo guarda en la base de datos.
-    const newHipoteca = new HipotecaModel({ importe, deuda: importe, cliente, cuotas, gestor });
+    const newHipoteca = new HipotecaModel({ importe, deuda: importe, cliente, cuotas, gestor, deudaImporte: importe });
     await newHipoteca.save();
 
     // Responde con los datos del nuevo Hipoteca.
