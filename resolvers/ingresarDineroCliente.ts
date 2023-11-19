@@ -44,7 +44,7 @@ const ingresarDineroCliente = async (req: Request, res: Response) => {
         { saldo: cliente.saldo, movimientos: cliente.movimientos },
     ).exec();
 
-    res.status(200).send(`Cliente ${dni} Updated`);
+    res.status(200).send(movimiento);
     
   } catch (error) {
     res.status(500).send(error.message);
