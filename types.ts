@@ -1,15 +1,9 @@
-export type Transaccion = {
-    emisor: string;
-    receptor: string;
-    importe: number;
-}
-
 export type Cliente = {
     nombre: string;
     dni: string;
     saldo: number;
     hipotecas: string[];
-    movimientos: Transaccion[];
+    movimientos: string[];
     gestor: string;
 };
 

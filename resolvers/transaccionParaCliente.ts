@@ -25,9 +25,11 @@ const transaccionParaCliente = async (req: Request, res: Response) => {
         return;
     }
 
+    const movimiento = `Emisor: ${dniEmisor} send ${cantidad} to Receptor: ${dniReceptor}`;
+
     if(clienteEmisor?.saldo !== undefined && clienteEmisor?.saldo >= cantidad){
         clienteEmisor.saldo -= cantidad;
-        clienteEmisor.movimientos.push({emisor: dniEmisor, receptor: dniReceptor, importe: cantidad})
+        clienteEmisor.movimientos.push(movimiento);
     }else{
         res.status(400).send("Cliente Emisor insufficient balance");
         return;
@@ -50,7 +52,7 @@ const transaccionParaCliente = async (req: Request, res: Response) => {
 
     if(clienteReceptor?.saldo !== undefined && clienteReceptor?.saldo >= cantidad){
         clienteReceptor.saldo += cantidad;
-        clienteReceptor.movimientos.push({emisor: dniEmisor, receptor: dniReceptor, importe: cantidad})
+        clienteReceptor.movimientos.push(movimiento);
     }else{
         res.status(400).send("Cliente Receptor insufficient balance");
         return;

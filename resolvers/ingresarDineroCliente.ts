@@ -1,6 +1,5 @@
 import { Request, Response } from "npm:express@4.18.2";
 import ClienteModel from "../db/clientes.ts";
-import { Transaccion } from "../types.ts";
 
 const ingresarDineroCliente = async (req: Request, res: Response) => {
   try {
@@ -25,11 +24,11 @@ const ingresarDineroCliente = async (req: Request, res: Response) => {
         return;
     }
 
-    const movimiento: Transaccion = {emisor: dni, receptor: dni, importe: importe}
+    const movimiento = `Emisor: ${dni} send ${importe} to Receptor: ${dni}`;
 
     if (cliente?.saldo !== undefined) {
         cliente.saldo += importe;
-        cliente.movimientos.push(movimiento)
+        cliente.movimientos.push(movimiento);
     } else {
         res.status(400).send("Money could not be deposited");
         return;
