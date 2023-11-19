@@ -6,14 +6,14 @@ const ingresarDineroCliente = async (req: Request, res: Response) => {
   try {
     
     const dni = req.params.id;
-    const cantidad = req.body;
+    const importe = req.body;
 
-    if (!dni || !cantidad) {
+    if (!dni || !importe) {
       res.status(400).send("Cliente DNI and Cantidad Dinero are required");
       return;
     }
 
-    if(cantidad <= 0){
+    if(importe <= 0){
         res.status(400).send("Cantidad Dinero must be greater than 0");
         return;
     }
@@ -25,10 +25,10 @@ const ingresarDineroCliente = async (req: Request, res: Response) => {
         return;
     }
 
-    const movimiento: Transaccion = {emisor: dni, receptor: dni, importe: cantidad}
+    const movimiento: Transaccion = {emisor: dni, receptor: dni, importe: importe}
 
     if (cliente?.saldo !== undefined) {
-        cliente.saldo += cantidad;
+        cliente.saldo += importe;
         cliente.movimientos.push(movimiento)
     } else {
         res.status(400).send("Money could not be deposited");

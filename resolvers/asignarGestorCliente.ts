@@ -4,7 +4,7 @@ import assignClienteAndGestor from "./assignClienteAndGestor.ts"
 const updateClientesGestor = async (req: Request, res: Response) => {
   try {
     
-    const { dniCliente } = req.params.id;
+    const dniCliente = req.params.id;
     const { dniGestor } = req.body;
 
     if (!dniCliente || !dniGestor) {
