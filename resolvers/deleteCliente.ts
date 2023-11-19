@@ -12,7 +12,7 @@ const deleteCliente = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     // Busca y elimina el cliente con el dni otorgado.
-    const Cliente = await ClienteModel.findOneAndDelete({ dni: id }).exec();
+    const Cliente = await ClienteModel.findOne({ dni: id }).exec();
 
     // Si no encuentra cliente.
     if (!Cliente) {
@@ -40,6 +40,9 @@ const deleteCliente = async (req: Request, res: Response) => {
       // Actualizamos campos
       { clientes: updatedClientes }
     ).exec();
+
+    // Busca y elimina el cliente con el dni otorgado.
+    await ClienteModel.findOneAndDelete({ dni: id }).exec();
 
     // Caso contrario, se elimina correctamente, envía un mensaje de cliente eliminado.
     res.status(200).send("Cliente deleted");
