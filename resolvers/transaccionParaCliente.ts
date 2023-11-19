@@ -8,15 +8,15 @@ const transaccionParaCliente = async (req: Request, res: Response) => {
   try {
     
     const dniEmisor = req.params.id;
-    const { dniReceptor, cantidad } = req.body;
+    const { dniReceptor, importe } = req.body;
 
-    if (!dniEmisor || !dniReceptor || !cantidad) {
-      res.status(400).send("Cliente Emisor DNI, Cliente Receptor DNI, Cantidad Dinero are required");
+    if (!dniEmisor || !dniReceptor || !importe) {
+      res.status(400).send("Cliente Emisor DNI, Cliente Receptor DNI, importe Dinero are required");
       return;
     }
 
-    if(cantidad <= 0){
-        res.status(400).send("Cantidad Dinero must be greater than 0");
+    if(importe <= 0){
+        res.status(400).send("importe Dinero must be greater than 0");
         return;
     }
 
@@ -28,10 +28,10 @@ const transaccionParaCliente = async (req: Request, res: Response) => {
         return;
     }
 
-    const movimiento = `Emisor: ${dniEmisor} send ${cantidad} to Receptor: ${dniReceptor}`;
+    const movimiento = `Emisor: ${dniEmisor} send ${importe} to Receptor: ${dniReceptor}`;
 
-    if(clienteEmisor?.saldo !== undefined && clienteEmisor?.saldo >= cantidad){
-        clienteEmisor.saldo -= cantidad;
+    if(clienteEmisor?.saldo !== undefined && clienteEmisor?.saldo >= importe){
+        clienteEmisor.saldo -= importe;
         clienteEmisor.movimientos.push(movimiento);
     }else{
         res.status(400).send("Cliente Emisor insufficient balance");
@@ -53,8 +53,8 @@ const transaccionParaCliente = async (req: Request, res: Response) => {
         return;
     }
 
-    if(clienteReceptor?.saldo !== undefined && clienteReceptor?.saldo >= cantidad){
-        clienteReceptor.saldo += cantidad;
+    if(clienteReceptor?.saldo !== undefined && clienteReceptor?.saldo >= importe){
+        clienteReceptor.saldo += importe;
         clienteReceptor.movimientos.push(movimiento);
     }else{
         res.status(400).send("Cliente Receptor insufficient balance");
