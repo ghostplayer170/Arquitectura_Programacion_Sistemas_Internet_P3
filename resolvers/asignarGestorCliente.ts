@@ -1,7 +1,7 @@
 import { Request, Response } from "npm:express@4.18.2";
 import assignClienteAndGestor from "./assignClienteAndGestor.ts"
 
-const updateClientesGestor = async (req: Request, res: Response) => {
+const updateClientesGestor = (req: Request, res: Response) => {
   try {
     
     const dniCliente = req.params.id;

@@ -1,3 +1,9 @@
+export type Transaccion = {
+    emisor: string;
+    receptor: string;
+    importe: number;
+}
+
 export type Cliente = {
     nombre: string;
     dni: string;
@@ -21,10 +27,4 @@ export type Gestor = {
     dni: string;
     nombre: string;
     clientes: string[];
-}
-
-export type Transaccion = {
-    emisor: string;
-    receptor: string;
-    importe: number;
 }
