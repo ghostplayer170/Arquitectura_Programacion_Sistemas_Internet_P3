@@ -7,15 +7,15 @@ import HipotecaModel from "../db/hipotecas.ts";
 const amortizarHipotecaCliente = async (req: Request, res: Response) => {
   try {
     
-    const dni = req.params.id;
+    const dniCliente = req.params.id;
     const { hipoteca } = req.body;
 
-    if (!dni) {
-      res.status(400).send("Cliente DNI are required");
+    if (!dniCliente) {
+      res.status(400).send("Cliente dniCliente are required");
       return;
     }
 
-    const cliente = await ClienteModel.findOne({ dni: dni }).exec();
+    const cliente = await ClienteModel.findOne({ dni: dniCliente }).exec();
     
     if (!cliente) {
         res.status(404).send("Cliente  not found");
@@ -37,7 +37,7 @@ const amortizarHipotecaCliente = async (req: Request, res: Response) => {
     }
 
     const importe = hipotecaCliente.importe/hipotecaCliente.cuotas;
-    const movimiento = `Emisor: ${dni} send ${importe} to Receptor: ${idHipoteca}`;
+    const movimiento = `Emisor: ${dniCliente} send ${importe} to Receptor: ${idHipoteca}`;
 
     if( cliente?.saldo !== undefined && (cliente.saldo >= importe) && hipotecaCliente.deudaCuotas >= 0 ){
         hipotecaCliente.deudaImporte -= importe;
@@ -57,13 +57,13 @@ const amortizarHipotecaCliente = async (req: Request, res: Response) => {
     ).exec();
 
     await ClienteModel.findOneAndUpdate(
-        // Buscamos un registro con 'dni' igual a 'dniReceptor'
-        { dni: dni },
+        // Buscamos un registro con 'dniCliente' igual a 'dniClienteReceptor'
+        { dniCliente: dniCliente },
         // Actualizamos campos
         { saldo: cliente.saldo, movimientos: cliente.movimientos },
     ).exec();
 
-    res.status(200).send(`Hipoteca ${idHipoteca} from Cliente ${dni} was Updated`);
+    res.status(200).send(`Hipoteca ${idHipoteca} from Cliente ${dniCliente} was Updated`);
     
   } catch (error) {
     res.status(500).send(error.message);
