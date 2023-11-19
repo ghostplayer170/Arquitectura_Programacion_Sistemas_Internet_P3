@@ -4,8 +4,10 @@ import ClienteModel from "../db/clientes.ts";
 const ingresarDineroCliente = async (req: Request, res: Response) => {
   try {
     
-    const { dni } = req.params.id;
+    const { id } = req.params;
     const { cantidad } = req.body;
+
+    const dni = id;
 
     if (!dni || !cantidad) {
       res.status(400).send("Cliente DNI and Cantidad Dinero are required");
