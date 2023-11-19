@@ -53,7 +53,7 @@ const amortizarHipotecaCliente = async (req: Request, res: Response) => {
         // Buscamos un registro con '_id' igual a 'idHipoteca'
         { _id: idHipoteca },
         // Actualizamos campos
-        { deudaImporte: hipotecaCliente.deudaImporte , deudaCouta: hipotecaCliente.deudaCuotas},
+        { deudaImporte: hipotecaCliente.deudaImporte, deudaCouta: hipotecaCliente.deudaCuotas },
     ).exec();
 
     await ClienteModel.findOneAndUpdate(
