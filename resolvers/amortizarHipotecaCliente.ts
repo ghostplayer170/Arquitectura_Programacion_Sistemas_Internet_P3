@@ -46,9 +46,6 @@ const amortizarHipotecaCliente = async (req: Request, res: Response) => {
         cliente.saldo -= importeCuota;
         cliente.movimientos.push(movimiento);
     }else{
-      console.log("Saldo del cliente:", cliente.saldo);
-console.log("Importe de la cuota:", importeCuota);
-console.log("Deuda de cuotas de la hipoteca:", hipotecaCliente.deudaCuotas);
         res.status(400).send("Insufficient balance");
         return;
     }
@@ -57,7 +54,7 @@ console.log("Deuda de cuotas de la hipoteca:", hipotecaCliente.deudaCuotas);
         // Buscamos un registro con '_id' igual a 'idHipoteca'
         { _id: idHipoteca },
         // Actualizamos campos
-        { deudaImporte: hipotecaCliente.deudaImporte, deudaCouta: hipotecaCliente.deudaCuotas },
+        { deudaImporte: hipotecaCliente.deudaImporte, deudaCuotas: hipotecaCliente.deudaCuotas },
     ).exec();
 
     await ClienteModel.findOneAndUpdate(

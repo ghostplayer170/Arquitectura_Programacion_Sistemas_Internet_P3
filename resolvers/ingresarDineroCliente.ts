@@ -29,7 +29,7 @@ const ingresarDineroCliente = async (req: Request, res: Response) => {
 
     const movimiento = `Emisor: ${dni} send ${importe} to Receptor: ${dni}`;
 
-    if (cliente?.saldo !== undefined) {
+    if (cliente?.saldo !== undefined) { //REVISAR SMELLCODES
         cliente.saldo += importe;
         cliente.movimientos.push(movimiento);
     } else {
