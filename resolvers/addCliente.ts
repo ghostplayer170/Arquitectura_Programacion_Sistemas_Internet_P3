@@ -22,7 +22,7 @@ const addCliente = async (req: Request, res: Response) => {
       return;
     }
 
-    const gestorExists = await ClienteModel.findOne({ dni: gestor }).exec();
+    const gestorExists = await GestorModel.findOne({ dni: gestor }).exec();
 
     if (!gestorExists) {
       res.status(400).send("Gestor dont exists");
