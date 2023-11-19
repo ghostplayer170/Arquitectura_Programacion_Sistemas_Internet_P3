@@ -1,5 +1,7 @@
 import { Request, Response } from "npm:express@4.18.2";
 import HipotecaModel from "../db/hipotecas.ts";
+import ClienteModel from "../db/clientes.ts";
+import GestorModel from "../db/gestores.ts";
 
 // Esta función maneja una solicitud para agregar un nuevo Hipoteca.
 const addHipoteca = async (req: Request, res: Response) => {
@@ -14,6 +16,14 @@ const addHipoteca = async (req: Request, res: Response) => {
 
     if (importe > 1000000) {
       res.status(400).send("Hipoteca Importe can't be more than a million");
+      return;
+    }
+
+    const gestorExists = await GestorModel.findOne({ dni: gestor }).exec();
+    const clienteExists = await ClienteModel.findOne({ dni: cliente }).exec();
+
+    if (!gestorExists || !clienteExists) {
+      res.status(400).send("Cliente or Gestor not found");
       return;
     }
 
