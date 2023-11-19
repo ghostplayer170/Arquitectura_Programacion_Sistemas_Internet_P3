@@ -34,7 +34,7 @@ const updateClientesGestor = async (req: Request, res: Response) => {
         return;
     }
 
-    if(gestor.clientes.length < 10){
+    if(gestor.clientes.length <= 10){
         res.status(404).send("Gestor have not space");
         return;
     }

@@ -5,10 +5,10 @@ import addCliente from "./resolvers/addCliente.ts";
 import addGestor from "./resolvers/addGestor.ts";
 import addHipoteca from "./resolvers/addHipoteca.ts";
 import deleteCliente from "./resolvers/deleteCliente.ts";
-import updateClientesGestor from "./resolvers/updateClientesGestor.ts";
+import updateClientesGestor from "./resolvers/asignarGestorCliente.ts";
 //import updateHipotecaCliente from "./resolvers/updateHipotecaCliente.ts";
-//import updateMovimientosCliente from "./resolvers/updateMovimientosCliente.ts";
-//import updateSaldoCliente from "./resolvers/updateSaldoCliente.ts";
+import transaccionParaCliente from "./resolvers/transaccionParaCliente.ts";
+import ingresarDineroCliente from "./resolvers/ingresarDineroCliente.ts";
 
 import { load } from "https://deno.land/std@0.204.0/dotenv/mod.ts"; //Leer variables de entorno
 const env = await load(); //Carga Variables de entorno
@@ -33,13 +33,13 @@ app.use(express.json());
 
 app
   .post("/api/BancoNebrija/addCliente", addCliente)
-  .post("/api/BancoNebrija/addGestor/", addGestor)
-  .post("/api/BancoNebrija/addHipoteca/", addHipoteca)
+  .post("/api/BancoNebrija/addGestor", addGestor)
+  .post("/api/BancoNebrija/addHipoteca", addHipoteca)
   .delete("/api/BancoNebrija/deleteCliente/:id", deleteCliente)
   .put("/api/BancoNebrija/updateClientesGestor/:id", updateClientesGestor)
   //.put("/api/BancoNebrija/updateHipotecaCliente/:id", updateHipotecaCliente)
-  //.put("/api/BancoNebrija/updateMovimientosCliente/:id", updateMovimientosCliente)
-  //.put("/api/BancoNebrija/updateSaldoCliente/:id", updateSaldoCliente);
+  .put("/api/BancoNebrija/transaccionParaCliente/:id", transaccionParaCliente)
+  .put("/api/BancoNebrija/ingresarDineroCliente/:id", ingresarDineroCliente);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);

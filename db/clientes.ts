@@ -7,9 +7,9 @@ const ClienteSchema = new Schema(
   {
     nombre: { type: String, required: true },
     dni: { type: String, required: true, unique: true },
-    saldo: { type: Number, required: false , default: 0},
-    hipotecas: { type: [String], required: false },
-    movimientos: { type: [String], required: false },
+    saldo: { type: Number, required: false, default: 0},
+    hipotecas: { type: [String], required: false, default: [] },
+    movimientos: { type: [String], required: false, default: [] },
     gestor: { type: String, required: false },
   },
   // { timestamps: true } //Añade dos campos creado y modificado

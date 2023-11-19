@@ -7,7 +7,7 @@ const GestorSchema = new Schema(
   {
     nombre: { type: String, required: true },
     dni: { type: String, required: true, unique: true },
-    clientes: { type: [String], required: false },
+    clientes: { type: [String], required: false, default: [] },
   },
   // { timestamps: true } //Añade dos campos creado y modificado
 );

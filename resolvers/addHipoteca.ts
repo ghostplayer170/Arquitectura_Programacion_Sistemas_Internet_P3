@@ -12,6 +12,11 @@ const addHipoteca = async (req: Request, res: Response) => {
       return;
     }
 
+    if (importe > 1000000) {
+      res.status(400).send("Hipoteca Importe can't be more than a million");
+      return;
+    }
+
     // Caso contrario, crea un nuevo Hipoteca y lo guarda en la base de datos.
     const newHipoteca = new HipotecaModel({ importe, deuda: importe, cliente, cuotas, gestor });
     await newHipoteca.save();

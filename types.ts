@@ -3,7 +3,7 @@ export type Cliente = {
     dni: string;
     saldo: number;
     hipotecas: string[];
-    movimientos: string[];
+    movimientos: Transaccion[];
     gestor: string;
 };
 
@@ -13,10 +13,18 @@ export type Hipoteca = {
     cuotas: number;
     cliente: string;
     gestor: string;
+    deudaImporte: number;
+    deudaCuotas: number;
 }
 
 export type Gestor = {
     dni: string;
     nombre: string;
     clientes: string[];
+}
+
+export type Transaccion = {
+    emisor: string;
+    receptor: string;
+    importe: number;
 }
