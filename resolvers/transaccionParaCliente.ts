@@ -4,7 +4,7 @@ import ClienteModel from "../db/clientes.ts";
 const transaccionParaCliente = async (req: Request, res: Response) => {
   try {
     
-    const { dniEmisor } = req.params.id;
+    const dniEmisor = req.params.id;
     const { dniReceptor, cantidad } = req.body;
 
     if (!dniEmisor || !dniReceptor || !cantidad) {
