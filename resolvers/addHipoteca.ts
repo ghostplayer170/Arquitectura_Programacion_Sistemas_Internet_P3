@@ -34,6 +34,15 @@ const addHipoteca = async (req: Request, res: Response) => {
     const newHipoteca = new HipotecaModel({ importe, deuda: importe, cliente, cuotas, gestor, deudaImporte: importe });
     await newHipoteca.save();
 
+    clienteExists.hipotecas.push(newHipoteca._id.toString());
+
+    const updatedCliente = await ClienteModel.findOneAndUpdate(
+      // Buscamos un registro con 'dni' igual a 'cliente'
+      { dni: cliente },
+      // Actualizamos campos
+      { hipotecas: clienteExists.hipotecas },
+    ).exec();
+
     try {
       assignClienteAndGestor(cliente, gestor);
     } catch (error) {
