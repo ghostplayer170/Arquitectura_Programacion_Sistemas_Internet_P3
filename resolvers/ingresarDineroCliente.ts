@@ -28,14 +28,8 @@ const ingresarDineroCliente = async (req: Request, res: Response) => {
     }
 
     const movimiento = `Emisor: ${dni} send ${importe} to Receptor: ${dni}`;
-
-    if (cliente?.saldo !== undefined) { //REVISAR SMELLCODES
-        cliente.saldo += importe;
-        cliente.movimientos.push(movimiento);
-    } else {
-        res.status(400).send("Money could not be deposited");
-        return;
-    }
+    cliente.saldo += importe;
+    cliente.movimientos.push(movimiento);
 
     await ClienteModel.findOneAndUpdate(
         // Buscamos un registro con 'dni' igual a 'dni'
