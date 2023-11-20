@@ -23,9 +23,6 @@ export const assignClienteAndGestor = async (dniCliente: string, dniGestor: stri
         { new: true }
     ).exec();
 
-    console.log(updatedCliente!.dni)
-    console.log(updatedCliente!.gestor)   
-
     if (!updatedCliente) {
         throw new Error("Cliente not found");
     }
