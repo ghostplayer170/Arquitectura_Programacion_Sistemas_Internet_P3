@@ -53,13 +53,8 @@ const transaccionParaCliente = async (req: Request, res: Response) => {
         return;
     }
 
-    if(clienteReceptor?.saldo !== undefined && clienteReceptor?.saldo >= importe){
-        clienteReceptor.saldo += importe;
-        clienteReceptor.movimientos.push(movimiento);
-    }else{
-        res.status(400).send("Cliente Receptor insufficient balance");
-        return;
-    }
+    clienteReceptor.saldo += importe;
+    clienteReceptor.movimientos.push(movimiento);
 
     await ClienteModel.findOneAndUpdate(
         // Buscamos un registro con 'dni' igual a 'dniReceptor'
