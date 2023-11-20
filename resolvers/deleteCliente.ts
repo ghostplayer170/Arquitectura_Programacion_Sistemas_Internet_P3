@@ -45,7 +45,7 @@ const deleteCliente = async (req: Request, res: Response) => {
     await ClienteModel.findOneAndDelete({ dni: id }).exec();
 
     // Caso contrario, se elimina correctamente, envía un mensaje de cliente eliminado.
-    res.status(200).send("Cliente deleted");
+    res.status(200).send(`Cliente ${id} deleted`);
 
   } catch (error) {
     res.status(404).send(error.message);

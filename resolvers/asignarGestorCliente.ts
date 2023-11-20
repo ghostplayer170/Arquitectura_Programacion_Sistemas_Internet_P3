@@ -15,19 +15,18 @@ const updateClientesGestor = async (req: Request, res: Response) => {
     }
 
     try {
-      
       await assignClienteAndGestor(dniCliente, dniGestor);
       res.status(200).send("Cliente and Gestor Updated");
-
     } catch (error) {
-
       if (error instanceof assignClienteAndGestorError) {
         res.status(400).send(error.message);
+        return;
       } else {
         res.status(500).send("Internal Server Error");
+        return;
       }
-      
     }
+
   } catch (error) {
     res.status(500).send(error.message);
   }

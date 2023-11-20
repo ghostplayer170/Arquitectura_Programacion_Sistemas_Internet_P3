@@ -28,7 +28,7 @@ const transaccionParaCliente = async (req: Request, res: Response) => {
         return;
     }
 
-    const movimiento = `Emisor: ${dniEmisor} send ${importe} to Receptor: ${dniReceptor}`;
+    const movimiento = `Emisor: ${dniEmisor} has transferred ${importe}$ to Receptor: ${dniReceptor}`;
 
     if(clienteEmisor.saldo >= importe){
         clienteEmisor.saldo -= importe;
