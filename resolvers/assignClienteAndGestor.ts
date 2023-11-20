@@ -51,6 +51,8 @@ export const assignClienteAndGestor = async (dniCliente: string, dniGestor: stri
         if (!updateGestor) {
             throw new Error("Gestor not found");
         }
+    } else {
+        throw new Error("Gestor has already assigned the Cliente");
     }
 };
 
