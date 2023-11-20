@@ -31,13 +31,13 @@ export const assignClienteAndGestor = async (dniCliente: string, dniGestor: stri
 
     if (!clienteExists) {
         
-        const clientesGestor = gestor.clientes.push(dniCliente);
+        gestor.clientes.push(dniCliente);
         
         const updateGestor = await GestorModel.findOneAndUpdate(
-            // Buscamos un registro con 'dni' igual a 'dni'
+            // Buscamos un registro con 'dni' igual a 'dniGestor'
             { dni: dniGestor },
             // Actualizamos campos
-            { clientes: clientesGestor },
+            { clientes: gestor.clientes },
 
             { new: true }
         ).exec();
