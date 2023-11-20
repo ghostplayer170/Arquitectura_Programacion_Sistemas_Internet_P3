@@ -44,7 +44,7 @@ app
   .put("/api/BancoNebrija/ingresarDineroCliente/:id", ingresarDineroCliente);
 
 // Ejecutar las funciones cada 5 minutos
-const tiempoEntreEjecuciones = 5 * 60 * 1000; // 5 minutos en milisegundos
+const tiempoEntreEjecuciones = 1 * 60 * 1000; // 5 minutos en milisegundos
 
 setInterval(depositDineroClientes,tiempoEntreEjecuciones);
 setInterval(payingCoutasHipotecas,tiempoEntreEjecuciones);
