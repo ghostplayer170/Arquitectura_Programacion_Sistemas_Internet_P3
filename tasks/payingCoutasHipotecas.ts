@@ -11,10 +11,7 @@ export const payingCoutasHipotecas = async () => {
       hipotecasPendientes.map(async (hipoteca) => {
         const cliente = await ClienteModel.findOneAndUpdate(
           { hipotecas: hipoteca._id, saldo: { $gte: hipoteca.importe / hipoteca.cuotas } },
-          {
-            $inc: { saldo: - (hipoteca.importe/hipoteca.cuotas) },
-            $push: { movimientos: `Paid ${hipoteca.importe/hipoteca.cuotas}$ for Hipoteca ${hipoteca._id}` },
-          },
+          { $inc: { saldo: - (hipoteca.importe/hipoteca.cuotas) }, $push: { movimientos: `Paid ${hipoteca.importe/hipoteca.cuotas}$ for Hipoteca ${hipoteca._id}` } },
           { new: true }
         );
 
