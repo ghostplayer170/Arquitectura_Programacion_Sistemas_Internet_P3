@@ -10,7 +10,7 @@ export const assignClienteAndGestor = async (dniCliente: string, dniGestor: stri
       throw new Error("Gestor not found");
     }
 
-    if(gestor.clientes.length > 10){
+    if (gestor.clientes.length > 10) {
         throw new Error("Gestor have not space for more Clientes");
     }
 
@@ -23,24 +23,30 @@ export const assignClienteAndGestor = async (dniCliente: string, dniGestor: stri
         { new: true }
     ).exec();
 
+    console.log(updatedCliente!.dni)
+    console.log(updatedCliente!.gestor)   
+
     if (!updatedCliente) {
         throw new Error("Cliente not found");
     }
 
     const clienteExists = gestor.clientes.find((elem) => elem === dniCliente);
 
-    if(!clienteExists){
+    if (!clienteExists) {
         
         const clientesGestor = gestor.clientes.push(dniCliente);
         
         const updateGestor = await GestorModel.findOneAndUpdate(
             // Buscamos un registro con 'dni' igual a 'dni'
-            { dni: dniCliente },
+            { dni: dniGestor },
             // Actualizamos campos
             { clientes: clientesGestor },
-            
+
             { new: true }
         ).exec();
+
+        console.log(updateGestor!.dni)
+        console.log(updateGestor!.clientes)    
 
         if (!updateGestor) {
             throw new Error("Gestor not found");
