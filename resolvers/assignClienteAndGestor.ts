@@ -3,7 +3,7 @@ import GestorModel from "../db/gestores.ts";
 
 export const assignClienteAndGestor = async (dniCliente: string, dniGestor: string) => {
 
-    const gestor = await GestorModel.findOne({ dniGestor }).exec();
+    const gestor = await GestorModel.findOne({ dni: dniGestor }).exec();
 
     // Si no encuentra el gestor.
     if (!gestor) {
@@ -11,7 +11,7 @@ export const assignClienteAndGestor = async (dniCliente: string, dniGestor: stri
     }
 
     if (gestor.clientes.length > 10) {
-        throw new Error("Gestor have not space for more Clientes");
+      throw new Error("Gestor have not space for more Clientes");
     }
 
     const updatedCliente = await ClienteModel.findOneAndUpdate(
