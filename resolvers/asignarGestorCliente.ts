@@ -19,7 +19,7 @@ const updateClientesGestor = async (req: Request, res: Response) => {
     try {
       assignClienteAndGestor(dniCliente, dniGestor);
     } catch (error) {
-      res.status(500).send(error.message);
+      res.status(500).send(error);
     }
 
     res.status(200).send("Cliente and Gestor Updated");
