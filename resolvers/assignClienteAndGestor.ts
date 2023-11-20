@@ -1,5 +1,6 @@
 import ClienteModel from "../db/clientes.ts";
 import GestorModel from "../db/gestores.ts";
+export class assignClienteAndGestorError extends Error {}
 
 export const assignClienteAndGestor = async (dniCliente: string, dniGestor: string) => {
 
@@ -7,11 +8,11 @@ export const assignClienteAndGestor = async (dniCliente: string, dniGestor: stri
 
     // Si no encuentra el gestor.
     if (!gestor) {
-      throw new Error("Gestor not found");
+      throw new assignClienteAndGestorError("Gestor not found");
     }
 
     if (gestor.clientes.length > 10) {
-      throw new Error("Gestor have not space for more Clientes");
+      throw new assignClienteAndGestorError("Gestor have not space for more Clientes");
     }
 
     const updatedCliente = await ClienteModel.findOneAndUpdate(
@@ -24,7 +25,7 @@ export const assignClienteAndGestor = async (dniCliente: string, dniGestor: stri
     ).exec();
 
     if (!updatedCliente) {
-        throw new Error("Cliente not found");
+        throw new assignClienteAndGestorError("Cliente not found");
     }
 
     const clienteExists = gestor.clientes.find((elem) => elem === dniCliente);
@@ -46,10 +47,10 @@ export const assignClienteAndGestor = async (dniCliente: string, dniGestor: stri
         console.log(updateGestor!.clientes)    
 
         if (!updateGestor) {
-            throw new Error("Gestor not found");
+            throw new assignClienteAndGestorError("Gestor not found");
         }
     } else {
-        throw new Error("Gestor has already assigned the Cliente");
+        throw new assignClienteAndGestorError("Gestor has already assigned the Cliente");
     }
 };
 

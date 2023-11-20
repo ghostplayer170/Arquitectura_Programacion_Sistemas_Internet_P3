@@ -1,9 +1,7 @@
 // deno-lint-ignore-file
 // @ts-ignore
 import { Request, Response } from "npm:express@4.18.2";
-import assignClienteAndGestor from "./assignClienteAndGestor.ts"
-import GestorModel from "../db/gestores.ts";
-import ClienteModel from "../db/clientes.ts";
+import assignClienteAndGestor, { assignClienteAndGestorError } from "./assignClienteAndGestor.ts";
 
 const updateClientesGestor = async (req: Request, res: Response) => {
   try {
@@ -17,16 +15,17 @@ const updateClientesGestor = async (req: Request, res: Response) => {
     }
 
     try {
-      assignClienteAndGestor(dniCliente, dniGestor);
+      await assignClienteAndGestor(dniCliente, dniGestor);
+      res.status(200).send("Cliente and Gestor Updated");
     } catch (error) {
-      res.status(500).send(error);
+      if (error instanceof assignClienteAndGestorError) {
+        res.status(400).send(error.message);
+      } else {
+        res.status(500).send("Internal Server Error");
+      }
     }
-
-    res.status(200).send("Cliente and Gestor Updated");
-    
   } catch (error) {
     res.status(500).send(error.message);
-    return;
   }
 };
 
