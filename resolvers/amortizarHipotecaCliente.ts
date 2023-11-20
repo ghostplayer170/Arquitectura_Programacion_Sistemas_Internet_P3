@@ -40,11 +40,11 @@ const amortizarHipotecaCliente = async (req: Request, res: Response) => {
     const importeCuota = hipotecaCliente.importe/hipotecaCliente.cuotas;
     const pagosPendientes = hipotecaCliente.deudaCuotas > 0;
     const movimiento = `Emisor: ${dniCliente} has amortised ${importeCuota} on his Hipoteca: ${idHipoteca}`;
-    
+
     if (!pagosPendientes) {
         res.status(400).send("Hipoteca is already completed");
         return;
-    } else if ( cliente.saldo >= importeCuota && pagosPendientes) { //ARREGLAR DEUDAS COUTAS //PROBAR
+    } else if ( cliente.saldo >= importeCuota && pagosPendientes) {
         hipotecaCliente.deudaImporte -= importeCuota;
         hipotecaCliente.deudaCuotas -= 1;
         cliente.saldo -= importeCuota;
