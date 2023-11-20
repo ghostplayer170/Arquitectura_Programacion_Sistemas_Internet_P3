@@ -59,12 +59,12 @@ const amortizarHipotecaCliente = async (req: Request, res: Response) => {
 
     await ClienteModel.findOneAndUpdate(
         // Buscamos un registro con 'dniCliente' igual a 'dniClienteReceptor'
-        { dniCliente: dniCliente },
+        { dni: dniCliente },
         // Actualizamos campos
         { saldo: cliente.saldo, movimientos: cliente.movimientos },
     ).exec();
 
-    res.status(200).send(`Hipoteca ${idHipoteca} from Cliente ${dniCliente} was Updated`);
+    res.status(200).send(`Hipoteca ${idHipoteca} from Cliente ${dniCliente} was Updated\n${movimiento}`);
     
   } catch (error) {
     res.status(500).send(error.message);
