@@ -27,7 +27,7 @@ const ingresarDineroCliente = async (req: Request, res: Response) => {
         return;
     }
 
-    const movimiento = `Emisor: ${dni} send ${importe} to Receptor: ${dni}`;
+    const movimiento = `Emisor: ${dni} send ${importe} to Receptor: ${dni}`; //MODIFICAR MENSAJE
     cliente.saldo += importe;
     cliente.movimientos.push(movimiento);
 

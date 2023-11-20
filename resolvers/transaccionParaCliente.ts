@@ -63,7 +63,7 @@ const transaccionParaCliente = async (req: Request, res: Response) => {
         { saldo: clienteReceptor.saldo },
     ).exec();
 
-    res.status(200).send(`Cliente ${dniEmisor} and Cliente ${dniReceptor} Updated`);
+    res.status(200).send(`Cliente ${dniEmisor} and Cliente ${dniReceptor} Updated \n ${movimiento}`);
     
   } catch (error) {
     res.status(500).send(error.message);
