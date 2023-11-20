@@ -1,7 +1,7 @@
 import ClienteModel from "../db/clientes.ts";
 import GestorModel from "../db/gestores.ts";
 
-const assignClienteAndGestor = async (dniCliente: string, dniGestor: string) => {
+export const assignClienteAndGestor = async (dniCliente: string, dniGestor: string) => {
 
     const gestor = await GestorModel.findOne({ dniGestor }).exec();
 
