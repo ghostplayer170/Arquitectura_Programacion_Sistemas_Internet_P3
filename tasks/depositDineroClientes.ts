@@ -8,7 +8,6 @@ export const depositDineroClientes = async () => {
         await ClienteModel.updateMany({}, { $inc: { saldo: importePeriodico}, $push: { movimientos: movimiento } });
     } catch (error) {
         console.error(error);
-        return;
     }
 
 };
