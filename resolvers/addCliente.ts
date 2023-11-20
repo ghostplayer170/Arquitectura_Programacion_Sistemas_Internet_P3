@@ -26,8 +26,8 @@ const addCliente = async (req: Request, res: Response) => {
       return;
     }
 
+    // Verifica existencia del Gestor
     const gestorExists = await GestorModel.findOne({ dni: gestor }).exec();
-
     if (!gestorExists) {
       res.status(400).send("Gestor not exists");
       return;
@@ -37,11 +37,13 @@ const addCliente = async (req: Request, res: Response) => {
     const newCliente = new ClienteModel({ nombre, dni, saldo, hipotecas, movimientos, gestor });
     await newCliente.save();
 
+    // Asignación del Cliente al Gestor, si existe
     if (gestorExists) {
       try {
         await assignClienteAndGestor(dni, gestor);
         res.status(200).send("Cliente and Gestor Updated");
       } catch (error) {
+        // Gestión de errores específicos de asignación Cliente-Gestor
         if (error instanceof assignClienteAndGestorError) {
           res.status(400).send(error.message);
           return;

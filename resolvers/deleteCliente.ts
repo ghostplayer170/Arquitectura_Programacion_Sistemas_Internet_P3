@@ -9,43 +9,45 @@ import GestorModel from "../db/gestores.ts";
 const deleteCliente = async (req: Request, res: Response) => {
   try {
     // Obtiene el dni del cliente de los parámetros de la solicitud.
-    const { id } = req.params;
+    const  dni  = req.params.id;
 
     // Busca y elimina el cliente con el dni otorgado.
-    const Cliente = await ClienteModel.findOne({ dni: id }).exec();
+    const Cliente = await ClienteModel.findOne({ dni: dni }).exec();
 
     // Si no encuentra cliente.
     if (!Cliente) {
       res.status(404).send("Cliente not found");
       return;
     }
-
+  
+    // Si el cliente tiene una hipoteca pendiente no puede ser eliminado de la base de datos.
     if (Cliente.hipotecas.length > 0) {
       res.status(404).send("Cliente has outstanding Hipotecas");
       return;
     }
-
-    const Gestor = await GestorModel.findOneAndDelete({ dni: Cliente.gestor }).exec();
-
+    
+    // Obtener el gestor asociado al cliente.
+    const Gestor = await GestorModel.findOne({ dni: Cliente.gestor }).exec();
     if (!Gestor) {
       res.status(404).send("Gestor not found");
       return;
     }
     
-    const updatedClientes = Gestor.clientes.filter((cliente: string) => cliente !== id);
+    // Elimina al cliente del array de clientes del gestor.
+    const updatedClientes = Gestor.clientes.filter((cliente: string) => cliente !== dni);
 
     await GestorModel.findOneAndUpdate(
-      // Buscamos un registro con 'dni' igual a gestor
+      // Buscamos un registro con 'dni' igual a gestor.
       { dni: Cliente.gestor },
-      // Actualizamos campos
-      { clientes: updatedClientes }
-    ).exec();
+      // Actualizamos solo el campo 'clientes'.
+      { $set: { clientes: updatedClientes } } 
+      ).exec();
 
     // Busca y elimina el cliente con el dni otorgado.
-    await ClienteModel.findOneAndDelete({ dni: id }).exec();
+    await ClienteModel.findOneAndDelete({ dni: dni }).exec();
 
-    // Caso contrario, se elimina correctamente, envía un mensaje de cliente eliminado.
-    res.status(200).send(`Cliente ${id} deleted`);
+    // Envía un mensaje de cliente eliminado.
+    res.status(200).send(`Cliente ${dni} deleted`);
 
   } catch (error) {
     res.status(404).send(error.message);

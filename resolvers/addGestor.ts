@@ -18,7 +18,6 @@ const addGestor = async (req: Request, res: Response) => {
 
     // Verifica si ya existe un Gestor con el mismo dni en la base de datos.
     const alreadyExists = await GestorModel.findOne({ dni: dni }).exec();
-
     if (alreadyExists) {
       res.status(400).send("Gestor already exists");
       return;
