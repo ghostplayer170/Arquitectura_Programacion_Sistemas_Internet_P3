@@ -9,6 +9,8 @@ import asignarGestorCliente from "./resolvers/asignarGestorCliente.ts";
 import amortizarHipotecaCliente from "./resolvers/amortizarHipotecaCliente.ts";
 import transaccionParaCliente from "./resolvers/transaccionParaCliente.ts";
 import ingresarDineroCliente from "./resolvers/ingresarDineroCliente.ts";
+import depositDineroClientes from "./tasks/depositDineroClientes.ts";
+import payingCoutasHipotecas from "./tasks/payingCoutasHipotecas.ts";
 
 import { load } from "https://deno.land/std@0.204.0/dotenv/mod.ts"; //Leer variables de entorno
 const env = await load(); //Carga Variables de entorno
@@ -40,6 +42,12 @@ app
   .put("/api/BancoNebrija/amortizarHipotecaCliente/:id", amortizarHipotecaCliente)
   .put("/api/BancoNebrija/transaccionParaCliente/:id", transaccionParaCliente)
   .put("/api/BancoNebrija/ingresarDineroCliente/:id", ingresarDineroCliente);
+
+// Ejecutar las funciones cada 5 minutos
+const tiempoEntreEjecuciones = 5 * 60 * 1000; // 5 minutos en milisegundos
+
+setInterval(depositDineroClientes,tiempoEntreEjecuciones);
+setInterval(payingCoutasHipotecas,tiempoEntreEjecuciones);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
