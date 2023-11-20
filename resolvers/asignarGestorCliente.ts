@@ -16,18 +16,10 @@ const updateClientesGestor = async (req: Request, res: Response) => {
       return;
     }
 
-    const gestorExists = await GestorModel.findOne({ dniGestor }).exec();
-    const clienteExists = await ClienteModel.findOne({ dniGestor }).exec();
-
-    if (!gestorExists || !clienteExists){
-      res.status(404).send("Cliente DNI or Gestor DNI not found");
-      return;
-    }
-
     try {
       assignClienteAndGestor(dniCliente, dniGestor);
     } catch (error) {
-      res.status(400).send(error);
+      res.status(400).send(error.message);
     }
 
     res.status(200).send("Cliente and Gestor Updated");
