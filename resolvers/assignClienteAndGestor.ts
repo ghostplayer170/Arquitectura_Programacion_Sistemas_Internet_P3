@@ -5,10 +5,15 @@ export class assignClienteAndGestorError extends Error {}
 export const assignClienteAndGestor = async (dniCliente: string, dniGestor: string) => {
 
     const gestor = await GestorModel.findOne({ dni: dniGestor }).exec();
-
     // Si no encuentra el gestor.
     if (!gestor) {
-      throw new assignClienteAndGestorError("Gestor not found");
+        throw new assignClienteAndGestorError("Gestor DNI not found");
+    }
+
+    const cliente = await ClienteModel.findOne({ dni: dniCliente }).exec();
+    // Si no encuentra el gestor.
+    if (!cliente) {
+      throw new assignClienteAndGestorError("Cliente DNI not found");
     }
 
     if (gestor.clientes.length > 10) {
@@ -41,14 +46,12 @@ export const assignClienteAndGestor = async (dniCliente: string, dniGestor: stri
             { clientes: gestor.clientes },
 
             { new: true }
-        ).exec();
-
-        console.log(updateGestor!.dni)
-        console.log(updateGestor!.clientes)    
+        ).exec();   
 
         if (!updateGestor) {
             throw new assignClienteAndGestorError("Gestor not found");
         }
+
     } else {
         throw new assignClienteAndGestorError("Gestor has already assigned the Cliente");
     }
