@@ -30,7 +30,7 @@ const transaccionParaCliente = async (req: Request, res: Response) => {
 
     const movimiento = `Emisor: ${dniEmisor} send ${importe} to Receptor: ${dniReceptor}`;
 
-    if(clienteEmisor?.saldo !== undefined && clienteEmisor?.saldo >= importe){
+    if(clienteEmisor.saldo >= importe){
         clienteEmisor.saldo -= importe;
         clienteEmisor.movimientos.push(movimiento);
     }else{
