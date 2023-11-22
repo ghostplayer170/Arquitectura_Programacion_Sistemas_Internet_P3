@@ -52,7 +52,9 @@ app
 // Ejecutar las funciones cada 5 minutos
 const tiempoEjecucion = 5 * 60 * 1000; // 5 minutos en milisegundos
 
+// Ejecuta la función de depositar dinero a todos los clientes repetidamente cada cierto tiempo.
 setInterval(depositDineroClientes, tiempoEjecucion);
+// Ejecuta la función de pagar las hipotecas de asociadas a cada cliente repetidamente cada cierto tiempo.
 setInterval(payingCoutasHipotecas, tiempoEjecucion);
 
 // Iniciar el servidor.
