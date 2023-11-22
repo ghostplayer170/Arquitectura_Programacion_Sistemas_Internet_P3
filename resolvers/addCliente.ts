@@ -41,7 +41,6 @@ const addCliente = async (req: Request, res: Response) => {
     if (gestorExists) {
       try {
         await assignClienteAndGestor(dni, gestor);
-        res.status(200).send("Cliente and Gestor Updated");
       } catch (error) {
         // Gestión de errores específicos de asignación Cliente-Gestor
         if (error instanceof assignClienteAndGestorError) {
