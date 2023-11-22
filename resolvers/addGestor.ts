@@ -23,6 +23,12 @@ const addGestor = async (req: Request, res: Response) => {
       return;
     }
 
+    // Verifica que no existan más de 10 clientes asociados al gestor.
+    if (clientes && clientes.length > 10){
+      res.status(400).send("Gestor can only have 10 clientes");
+      return;
+    }
+
     // Caso contrario, crea un nuevo Gestor y lo guarda en la base de datos.
     const newGestor = new GestorModel({ nombre, dni, clientes });
     await newGestor.save();
