@@ -3,6 +3,9 @@ import HipotecaModel from "../db/hipotecas.ts";
 
 export const payingCoutasHipotecas = async () => {
   try {
+    const now = new Date();
+    const horaActual = now.toLocaleTimeString(); // Obtiene la hora actual como una cadena en el formato local
+  
     // Obtiene todas las hipotecas con cuotas pendientes.
     const hipotecasPendientes = await HipotecaModel.find({ deudaCuotas: { $gt: 0 } });
 
@@ -10,7 +13,7 @@ export const payingCoutasHipotecas = async () => {
     await Promise.all(
       hipotecasPendientes.map(async (hipoteca) => {
         // Mensaje del movimiento/transaccion.
-        const movimiento = `Paid ${hipoteca.importe/hipoteca.cuotas}$ for Hipoteca ${hipoteca._id}`;
+        const movimiento = `${horaActual}: Paid ${hipoteca.importe/hipoteca.cuotas}$ for Hipoteca ${hipoteca._id}`;
         // Actualiza la información del cliente en la base de datos.
         const cliente = await ClienteModel.findOneAndUpdate(
           // Obtiene un cliente con la hipoteca pendiente de pagar y que tenga saldo suficiente para pagar la cuota.
