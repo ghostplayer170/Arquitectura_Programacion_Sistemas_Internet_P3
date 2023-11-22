@@ -25,7 +25,7 @@ const ingresarDineroCliente = async (req: Request, res: Response) => {
     }
 
     // Verifica que el importe sea mayor que 0.
-    if(importe <= 0){
+    if(importe < 0){
         res.status(400).send("Cantidad Dinero must be greater than 0");
         return;
     }
