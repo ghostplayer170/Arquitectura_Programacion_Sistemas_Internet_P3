@@ -9,7 +9,7 @@ import GestorModel from "../db/gestores.ts";
 const deleteCliente = async (req: Request, res: Response) => {
   try {
     // Obtiene el dni del cliente de los parámetros de la solicitud.
-    const  dni  = req.params.id;
+    const dni = req.params.id;
 
     // Busca y elimina el cliente con el dni otorgado.
     const Cliente = await ClienteModel.findOne({ dni: dni }).exec();

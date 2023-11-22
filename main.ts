@@ -50,7 +50,7 @@ app
   .put("/api/BancoNebrija/ingresarDineroCliente/:id", ingresarDineroCliente);
 
 // Ejecutar las funciones cada 5 minutos
-const tiempoEjecucion = (5 * 60 * 1000) / (5 * 2); // 5 minutos en milisegundos
+const tiempoEjecucion = 5 * 60 * 1000; // 5 minutos en milisegundos
 
 // Ejecuta la función de depositar dinero a todos los clientes repetidamente cada cierto tiempo.
 setInterval(depositDineroClientes, tiempoEjecucion);
