@@ -62,7 +62,7 @@ const amortizarHipotecaCliente = async (req: Request, res: Response) => {
         cliente.saldo -= importeCuota;
         cliente.movimientos.push(movimiento);
     }else{
-        res.status(400).send("Insufficient balance");
+        res.status(400).send("Cliente has insufficient balance");
         return;
     }
     
