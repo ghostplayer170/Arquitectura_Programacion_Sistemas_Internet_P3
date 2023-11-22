@@ -3,6 +3,7 @@
 
 import { Request, Response } from "npm:express@4.18.2";
 import ClienteModel from "../db/clientes.ts";
+import { obtenerHoraActual } from "../localHour.ts"
 
 const transaccionParaCliente = async (req: Request, res: Response) => {
   try {
@@ -44,7 +45,7 @@ const transaccionParaCliente = async (req: Request, res: Response) => {
     }
 
     // Mensaje del movimiento/transaccion.
-    const movimiento = `Emisor: ${dniEmisor} has transferred ${importe}$ to Receptor: ${dniReceptor}`;
+    const movimiento = `${obtenerHoraActual()}: Emisor: ${dniEmisor} has transferred ${importe}$ to Receptor: ${dniReceptor}`;
 
     // Actualiza la información del cliente emisor en la base de datos.
     await ClienteModel.findOneAndUpdate(

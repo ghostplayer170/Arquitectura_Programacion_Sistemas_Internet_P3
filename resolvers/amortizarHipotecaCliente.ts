@@ -4,6 +4,7 @@
 import { Request, Response } from "npm:express@4.18.2";
 import ClienteModel from "../db/clientes.ts";
 import HipotecaModel from "../db/hipotecas.ts";
+import { obtenerHoraActual } from "../localHour.ts"
 
 const amortizarHipotecaCliente = async (req: Request, res: Response) => {
   try {
@@ -44,7 +45,7 @@ const amortizarHipotecaCliente = async (req: Request, res: Response) => {
     // Verifica si hay pagos pendientes.
     const pagosPendientes = hipotecaCliente.deudaCuotas > 0;
     // Mensaje del movimiento/transaccion.
-    const movimiento = `Emisor: ${dniCliente} has amortised ${importeCuota} on his Hipoteca: ${idHipoteca}`;
+    const movimiento = `${obtenerHoraActual()}: Emisor: ${dniCliente} has amortised ${importeCuota} on his Hipoteca: ${idHipoteca}`;
 
     // Verifica si no hay pagos pendientes. La Hipoteca se encuentra pagada.
     if (!pagosPendientes) {

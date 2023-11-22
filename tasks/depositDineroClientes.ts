@@ -1,5 +1,5 @@
 import ClienteModel from "../db/clientes.ts";
-import { obtenerHoraActual } from "./localHour.ts"
+import { obtenerHoraActual } from "../localHour.ts"
 
 
 export const depositDineroClientes = async () => {
