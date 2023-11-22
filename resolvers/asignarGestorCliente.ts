@@ -17,9 +17,10 @@ const updateClientesGestor = async (req: Request, res: Response) => {
       return;
     }
     
-    // Asignar el cliente al gestor.
     try {
+      // Asignar el cliente al gestor.
       await assignClienteAndGestor(dniCliente, dniGestor);
+      // Envía un mensaje del actualización de cliente y gestor.
       res.status(200).send(`Cliente: ${dniCliente} and Gestor: ${dniGestor} Updated`);
     } catch (error) {
       if (error instanceof assignClienteAndGestorError) {

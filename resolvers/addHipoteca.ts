@@ -45,8 +45,8 @@ const addHipoteca = async (req: Request, res: Response) => {
       { $push: { hipotecas: newHipoteca._id.toString() } },
     ).exec();
 
-    // Asignar el cliente al gestor
     try {
+        // Asignar el cliente al gestor.
         await assignClienteAndGestor(cliente, gestor);
     } catch (error) {
         if (error instanceof assignClienteAndGestorError) {

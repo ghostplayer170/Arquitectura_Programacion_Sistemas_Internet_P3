@@ -7,63 +7,63 @@ import ClienteModel from "../db/clientes.ts";
 const transaccionParaCliente = async (req: Request, res: Response) => {
   try {
     
+    // Obtiene el DNI del emisor, DNI del recptor y el importe desde el cuerpo y parámetros de la solicitud.
     const dniEmisor = req.params.id;
     const { dniReceptor, importe } = req.body;
 
+    // Verifica si el DNI del emisor, DNI del receptor y el importe están ausentes en la solicitud.
     if (!dniEmisor || !dniReceptor || !importe) {
-      res.status(400).send("Cliente Emisor DNI, Cliente Receptor DNI, importe Dinero are required");
+      res.status(400).send("Cliente Emisor DNI, Cliente Receptor DNI, importe are required");
       return;
     }
 
-    if(importe <= 0){
-        res.status(400).send("importe Dinero must be greater than 0");
-        return;
-    }
-
-    //Emisor
+    // Verifica que el dni emisor exista en la base de datos.
     const clienteEmisor = await ClienteModel.findOne({ dni: dniEmisor }).exec();
-    
     if (!clienteEmisor) {
         res.status(404).send("Cliente Emisor not found");
         return;
     }
 
-    const movimiento = `Emisor: ${dniEmisor} has transferred ${importe}$ to Receptor: ${dniReceptor}`;
-
-    if(clienteEmisor.saldo >= importe){
-        clienteEmisor.saldo -= importe;
-        clienteEmisor.movimientos.push(movimiento);
-    }else{
-        res.status(400).send("Cliente Emisor insufficient balance");
-        return;
-    }
-
-    await ClienteModel.findOneAndUpdate(
-        // Buscamos un registro con 'dni' igual a 'dniEmisor'
-        { dni: dniEmisor },
-        // Actualizamos campos
-        { saldo: clienteEmisor.saldo },
-    ).exec();
-
-    //Receptor
+    // Verifica que el dni receptor exista en la base de datos.
     const clienteReceptor = await ClienteModel.findOne({ dni: dniReceptor }).exec();
-
     if (!clienteReceptor) {
         res.status(404).send("Cliente Receptor not found");
         return;
     }
 
-    clienteReceptor.saldo += importe;
-    clienteReceptor.movimientos.push(movimiento);
+    // Verifica que el importe sea mayor que 0.
+    if(importe < 0){
+        res.status(400).send("Importe must be greater than 0");
+        return;
+    }
 
+    // Verifica que el saldo del cliente sea mayor al importe a transferir.
+    if(clienteEmisor.saldo < importe){
+      res.status(400).send("Cliente Emisor insufficient balance");
+      return;
+    }
+
+    // Mensaje del movimiento/transaccion.
+    const movimiento = `Emisor: ${dniEmisor} has transferred ${importe}$ to Receptor: ${dniReceptor}`;
+
+    // Actualiza la información del cliente emisor en la base de datos.
     await ClienteModel.findOneAndUpdate(
-        // Buscamos un registro con 'dni' igual a 'dniReceptor'
-        { dni: dniReceptor },
-        // Actualizamos campos
-        { saldo: clienteReceptor.saldo },
+        // Buscamos un registro con 'dni' igual a 'dniEmisor'.
+        { dni: dniEmisor },
+        // Actualizamos campos.
+        { $inc: { saldo: -importe }, $push: { movimientos: movimiento } },
     ).exec();
 
-    res.status(200).send(`Cliente ${dniEmisor} and Cliente ${dniReceptor} Updated \n ${movimiento}`);
+    // Actualiza la información del cliente receptor en la base de datos.
+    await ClienteModel.findOneAndUpdate(
+        // Buscamos un registro con 'dni' igual a 'dniReceptor'.
+        { dni: dniReceptor },
+        // Actualizamos campos.
+        { $inc: { saldo: +importe }, $push: { movimientos: movimiento } },
+    ).exec();
+
+    // Envía un mensaje del movimiento/transaccion.
+    res.status(200).send(movimiento);
     
   } catch (error) {
     res.status(500).send(error.message);

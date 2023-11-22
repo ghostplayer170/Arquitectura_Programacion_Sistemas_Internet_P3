@@ -27,14 +27,14 @@ const amortizarHipotecaCliente = async (req: Request, res: Response) => {
 
     // Busca si existe la hipoteca en la base de datos usando su _id.
     const hipotecaCliente = await HipotecaModel.findOne({ _id: hipoteca }).exec();
-    if ( !hipotecaCliente ) {
+    if (!hipotecaCliente) {
         res.status(404).send("Hipoteca  not found");
         return;
     }
 
     // Verifica que la hipoteca este asociada a las hipotecas del cliente.
-    const idHipoteca = cliente.hipotecas.find((elem) => elem === hipoteca);
-    if ( !idHipoteca ) {
+    const idHipoteca = cliente.hipotecas.find((hipotecaExiste) => hipotecaExiste === hipoteca);
+    if (!idHipoteca) {
         res.status(404).send("Hipoteca not found in Cliente Hipotecas");
         return;
     }
