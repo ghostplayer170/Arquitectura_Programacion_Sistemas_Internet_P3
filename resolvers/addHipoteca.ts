@@ -25,6 +25,12 @@ const addHipoteca = async (req: Request, res: Response) => {
       return;
     }
 
+    // El importe no puede ser menor a 0.
+    if (importe < 0) {
+      res.status(400).send("Hipoteca Importe can't be less than cero");
+      return;
+    }
+
     // Verifica que el cliente y el gestor existan en las bases de datos.
     const gestorExists = await GestorModel.findOne({ dni: gestor }).exec();
     const clienteExists = await ClienteModel.findOne({ dni: cliente }).exec();
